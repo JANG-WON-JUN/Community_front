@@ -3,8 +3,10 @@ class JwtToken{
     refreshToken: string;
 
     constructor(accessToken: string, refreshToken: string){
-        this.accessToken = 'Bearer ' + accessToken;
-        this.refreshToken = 'Bearer ' + refreshToken;
+        const prifix: string = 'Bearer ';
+        
+        this.accessToken = prifix + accessToken;
+        this.refreshToken = prifix + refreshToken;
     }
 }
 

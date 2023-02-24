@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import {useRouter} from "vue-router";
 import loginStore from "../../stores/loginStore";
 
@@ -23,7 +24,7 @@ const logout = function(){
                     <el-button type="danger" @click="logout">로그아웃</el-button>
                 </el-descriptions-item>
             </el-descriptions>
-            <el-button v-else type="primary" @click="router.push({ path: '/login' })">로그인</el-button>
+            <el-button v-else type="primary" @click="$router.push({ path: '/login' })">로그인</el-button>
         </el-col>
     </el-row>
 </template>

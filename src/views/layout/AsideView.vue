@@ -33,4 +33,8 @@
 .el-link .el-icon--right.el-icon {
   vertical-align: text-bottom;
 }
+.el-row {
+  margin-bottom: 20px;
+  height: inherit;
+}
 </style>

@@ -3,7 +3,8 @@
 </script>
 
 <template>
-  <RouterView/> <!-- 라우터를 통해 가져온 View.vue의 내용을 보여줄 영역 -->
+  <RouterView />
+  <!-- 라우터를 통해 가져온 View.vue의 내용을 보여줄 영역 -->
 </template>
 
 <style>
@@ -12,7 +13,7 @@ body {
 }
 
 .layout-container {
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 1024px;
 }
 </style>

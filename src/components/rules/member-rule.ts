@@ -57,7 +57,7 @@ const memberCreateRule = ref({
         return new Promise((resolve, reject) => {
           axios
             .post('/join/nicknameCheck', {
-              email: member.value.nickname,
+              nickname: member.value.nickname,
             })
             .then(function () {
               callback();

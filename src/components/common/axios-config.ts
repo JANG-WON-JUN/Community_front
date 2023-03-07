@@ -46,7 +46,7 @@ instance.interceptors.response.use(
         error.response.data.exceptionName === 'SignatureException'
       ) {
         // 토큰이 존재하지 않거나 서명 예외 발생 시 로그인 페이지로 이동
-        router.push({ name: 'login' });
+        router.push({ name: '/login' });
       }
       if (error.response.data.exceptionName === 'ExpiredJwtException') {
         // 토큰이 만료되었을 때 refresh 토큰 발급 요청

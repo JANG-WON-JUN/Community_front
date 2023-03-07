@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Member } from '../components/models/member';
 
@@ -20,10 +20,20 @@ const loginStore = defineStore({
   },
   // this.변수명으로 값을 가져올 때는 getter를 통해 값을 가져오는 듯?
   actions: {
+    login(member: Member) {
+      this.isAuthed = true;
+      this.member = member;
+    },
     logout(): void {
       this.isAuthed = false;
       this.member = new Member('', '');
     },
+    isStoredMember(email: string | undefined): boolean {
+      return email === this.member.email ? true : false;
+    },
+  },
+  persist: {
+    storage: localStorage,
   },
 });
 

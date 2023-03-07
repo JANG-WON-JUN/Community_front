@@ -16,9 +16,6 @@ a,
 }
 
 @media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
 }
 
 @media (min-width: 1024px) {
@@ -32,4 +29,34 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+.error-message {
+  color: red;
+}
+
+.ck-editor__editable {
+  min-height: 300px;
+}
+
+.el-textarea__inner {
+  width: 100%;
+  border: none;
+  resize: none;
+}
+
+.txt-right{
+  text-align: right;
+}
+
+.mt-100{
+  margin-top: 100px;
+}
+
+.w-95{
+  width: 95%;
+}
+
+.mh-450{
+  min-height: 450px;
 }

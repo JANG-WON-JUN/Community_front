@@ -18,7 +18,7 @@ const member = ref({
   confirmPassword: '1234',
   year: '1995',
   month: '5',
-  day: '4219',
+  day: '1',
   sex: 'm',
 
   /* email: '',

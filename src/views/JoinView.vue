@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, reactive } from 'vue';
+import type { FormInstance } from 'element-plus';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from '../components/common/axios-config';
+import { alertConfirm } from '../components/common/alert';
 import { memberCreate, memberCreateErrMsg } from '../components/models/member';
 import {
   memberCreateRule,
   memberCreateSetErrMsg,
 } from '../components/rules/member-rule';
-import type { FormInstance } from 'element-plus';
+import { focusOn } from '../components/common/utils';
+import axios from '../components/common/axios-config';
 
 const memberFormRef = ref<FormInstance>();
 const emailRef = ref<HTMLElement>();
@@ -18,11 +20,7 @@ const memberErrMsg = memberCreateErrMsg;
 const memberRuls = memberCreateRule;
 const setErrMsg = memberCreateSetErrMsg;
 
-onMounted(() => {
-  if (emailRef.value) {
-    emailRef.value.focus();
-  }
-});
+onMounted(() => focusOn(emailRef.value));
 
 function join(formEl: FormInstance | undefined) {
   if (!formEl) return;
@@ -31,13 +29,16 @@ function join(formEl: FormInstance | undefined) {
       axios
         .post('/join', member.value)
         .then(function (response) {
-          router.push({ name: 'home' });
-          console.log('회원등록 성공!');
-          console.log(response.data);
+          if (response.status === 200) {
+            alertConfirm(
+              '알림',
+              '회원가입이 완료되었습니다. 로그인을 해 주세요.',
+              () => router.push({ name: 'login' })
+            );
+          }
         })
         .catch(function (error) {
           setErrMsg(error.response.data);
-          new Error('Message 1');
         });
     }
   });
@@ -52,6 +53,7 @@ function join(formEl: FormInstance | undefined) {
     label-width="100px"
     label-position="top"
     :validate-on-rule-change="false"
+    @submit.prevent
   >
     <el-form-item
       label="이메일"
@@ -144,8 +146,4 @@ function join(formEl: FormInstance | undefined) {
   </el-form>
 </template>
 
-<style>
-.error-message {
-  color: red;
-}
-</style>
+<style></style>

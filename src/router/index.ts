@@ -15,6 +15,8 @@ import MainView from '../views/MainView.vue';
   2. name은 children의 name만 작성 후 push의 name 속성에 써준다.
   3. 보내는 쪽에서 query 속성에 데이터를 작성 후에
     받는 쪽에서 useRoute선언 후 route.query.파라미터명 으로 받는다. (get 요청에서 query string과 동일한 기능)
+  4. 만약에 name이 다르더라도 path가 동일하면 겹치는 path를 가진 페이지에서 새로고침 했을 때
+    겹체는 path를 가지는 페이지 중 다른 페이지로 이동해버린다. (즉 path, name은 고유해야 됨, 새로고침 시 path로 routing 하는듯.)
 */
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,7 +39,7 @@ const router = createRouter({
       component: IndexView,
       children: [
         {
-          path: '/board',
+          path: '/boards',
           name: 'board',
           component: BoardListView,
         },
@@ -73,7 +75,7 @@ const router = createRouter({
       component: IndexView,
       children: [
         {
-          path: '/board',
+          path: '/board/edit',
           name: 'boardEdit',
           component: BoardEditView,
         },

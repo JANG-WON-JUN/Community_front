@@ -9,7 +9,7 @@ class BoardRouterService {
   }
 
   goBoardList(boardType: string, desc: string) {
-    this.router.replace({
+    this.router.push({
       name: 'board',
       query: { boardType: boardType, desc: desc },
     });

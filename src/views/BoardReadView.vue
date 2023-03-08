@@ -15,6 +15,7 @@ import {
   commentCreateErrMsg,
 } from '../components/models/comment-write';
 import loginStore from '../stores/login-store';
+import boardTypeStore from '../stores/board-type-store';
 import boardService from '../components/services/board-service';
 import commentService from '../components/services/comment-service';
 import BoardRouterService from '../components/services/board-router-service';
@@ -22,8 +23,8 @@ import CommentSearchCondition from '../components/models/comment-search-conditio
 import Editor from '../components/Editor.vue';
 
 const route = useRoute();
-const router = useRouter();
 const useLoginStore = loginStore();
+const useBoardTypeStore = boardTypeStore();
 const boardRouterService = new BoardRouterService(useRouter());
 const boardId = ref(route.query.id);
 const board = ref(new Board());
@@ -77,7 +78,11 @@ const deleteBoard = async () => {
   try {
     if (typeof boardId.value === 'string') {
       boardService.deleteBoard(boardId.value);
-      router.push({ name: 'board' });
+      boardRouterService.goBoardList(
+        useBoardTypeStore.getCurrentBoardType,
+        useBoardTypeStore.getBoardType(useBoardTypeStore.getCurrentBoardType)
+          .description
+      );
     }
   } catch (error: any) {
     console.log('삭제 에러 발생');

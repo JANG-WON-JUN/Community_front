@@ -12,8 +12,8 @@ const emailRef = ref<HTMLElement>();
 const passwordRef = ref<HTMLElement>();
 
 // const email = ref('');
-const email = ref('w32807@naver.com');
-const password = ref('1234');
+const email = ref('');
+const password = ref('');
 const router = useRouter();
 const useLoginStore = loginStore();
 

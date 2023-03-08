@@ -11,7 +11,7 @@ class BoardService {
     });
   }
 
-  readBoard(id: string): any {
+  readBoard(id: string | number): any {
     return axios.get('/board/' + id);
   }
 

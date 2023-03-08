@@ -15,11 +15,11 @@ import {
   commentCreateErrMsg,
 } from '../components/models/comment-write';
 import loginStore from '../stores/login-store';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import boardService from '../components/services/board-service';
 import commentService from '../components/services/comment-service';
 import BoardRouterService from '../components/services/board-router-service';
 import CommentSearchCondition from '../components/models/comment-search-condition';
+import Editor from '../components/Editor.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -82,10 +82,6 @@ const deleteBoard = async () => {
   } catch (error: any) {
     console.log('삭제 에러 발생');
   }
-};
-
-const editorConfig = {
-  removePlugins: ['toolbar'],
 };
 
 const createComment = (formEl: FormInstance | undefined) => {
@@ -188,12 +184,7 @@ const cancleAddReply = (comment: CommentRead) => {
 <template>
   <div>{{ board.title }}</div>
   <el-divider />
-  <ckeditor
-    :editor="ClassicEditor"
-    v-model="board.content"
-    :disabled="true"
-    :config="editorConfig"
-  ></ckeditor>
+  <Editor :content="board.content" :readonly="true"></Editor>
   <el-row :gutter="20" class="row-bg mt-3">
     <el-col
       :span="24"

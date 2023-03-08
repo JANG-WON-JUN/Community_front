@@ -4,18 +4,15 @@ import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { alertConfirm } from '../components/common/alert';
 import { focusOn } from '../components/common/utils';
-import {
-  boardCreate,
-  boardCreateErrMsg,
-} from '../components/models/board-write';
+import { Board, boardCreateErrMsg } from '../components/models/board-write';
 import {
   boardCreateRule,
   boardCreateSetErrMsg,
 } from '../components/rules/board-rule';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import boardService from '../components/services/board-service';
 import BoardRouterService from '../components/services/board-router-service';
 import boardTypeStore from '../stores/board-type-store';
+import Editor from '../components/Editor.vue';
 
 const boardFormRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement>();
@@ -24,7 +21,7 @@ const boardRouterService = new BoardRouterService(useRouter());
 const useBoardTypeStore = boardTypeStore();
 const boardType = ref(route.query.boardType);
 
-const board = boardCreate;
+const board = ref(new Board());
 const boardErrMsg = boardCreateErrMsg;
 const boardRules = boardCreateRule;
 const setErrMsg = boardCreateSetErrMsg;
@@ -71,7 +68,10 @@ const createBoard = (formEl: FormInstance | undefined) => {
     <el-form-item label="제목" required prop="title" :error="boardErrMsg.title">
       <el-input v-model="board.title" ref="titleRef" placeholder="제목" />
     </el-form-item>
-    <ckeditor :editor="ClassicEditor" v-model="board.content"></ckeditor>
+    <Editor
+      :content="board.content"
+      @modify-content="(content) => (board.content = content)"
+    ></Editor>
     <el-row class="row-bg mt-3" justify="center">
       <el-col :span="3">
         <el-button type="primary" @click="createBoard(boardFormRef)"

@@ -4,14 +4,14 @@ import { focusOn } from '../components/common/utils';
 import { alertConfirm } from '../components/common/alert';
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { boardEdit, boardEditErrMsg } from '../components/models/board-edit';
+import { Board, boardEditErrMsg } from '../components/models/board-edit';
 import {
   boardCreateRule,
   boardCreateSetErrMsg,
 } from '../components/rules/board-rule';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import boardService from '../components/services/board-service';
 import BoardRouterService from '../components/services/board-router-service';
+import Editor from '../components/Editor.vue';
 
 const boardFormRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement>();
@@ -19,16 +19,17 @@ const route = useRoute();
 const boardRouterService = new BoardRouterService(useRouter());
 const boardId = ref(route.query.id);
 
-const board = boardEdit;
+const board = ref(new Board());
 const boardErrMsg = boardEditErrMsg;
 const boardRuls = boardCreateRule;
 const setErrMsg = boardCreateSetErrMsg;
 
-onMounted(() => {
+onMounted(async () => {
   focusOn(titleRef.value);
 
-  if (boardId.value !== null && typeof boardId.value === 'number') {
-    board.value.id = boardId.value;
+  if (boardId.value !== null) {
+    const response = await boardService.readBoard(boardId.value);
+    board.value = response.data.data;
   }
 });
 
@@ -64,7 +65,10 @@ const editBoard = (formEl: FormInstance | undefined) => {
       <el-input v-model="board.title" ref="titleRef" placeholder="제목" />
     </el-form-item>
     <el-divider />
-    <ckeditor :editor="ClassicEditor" v-model="board.content"></ckeditor>
+    <Editor
+      :content="board.content"
+      @modify-content="(content) => (board.content = content)"
+    ></Editor>
     <el-row class="row-bg mt-3" justify="center">
       <el-col :span="3">
         <el-button type="primary" @click="editBoard(boardFormRef)"

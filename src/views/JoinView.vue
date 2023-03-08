@@ -22,7 +22,7 @@ const setErrMsg = memberCreateSetErrMsg;
 
 onMounted(() => focusOn(emailRef.value));
 
-function join(formEl: FormInstance | undefined) {
+const join = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
@@ -42,7 +42,7 @@ function join(formEl: FormInstance | undefined) {
         });
     }
   });
-}
+};
 </script>
 
 <template>

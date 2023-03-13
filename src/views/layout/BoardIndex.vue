@@ -54,7 +54,7 @@ const logout = function () {
         <el-link :underline="false" @click="router.push({ path: '/' })"
           ><el-image
             style="width: 170px; height: 100px"
-            src="/src/assets/main-logo.jpg"
+            src="/assets/images/main-logo.jpg"
             fit="contain"
         /></el-link>
         <!-- https://element-plus.org/en-US/component/menu.html#submenu-slots 속성들 참고하기 -->

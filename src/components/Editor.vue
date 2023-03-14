@@ -54,10 +54,6 @@ const editorConfig = {
   },
 };
 
-onMounted(() => {
-  console.log(`eDit onMounted`);
-  console.log(content.value);
-});
 // readonly는 부모 컴포넌트에서 불리언값을 그대로 전달 받지만
 // content는 Editor.vue가 먼저 로드되고 부모의 ref 값이 적용되므로
 // watch로 값을 넣어준다.

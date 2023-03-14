@@ -26,10 +26,10 @@ const setErrMsg = boardCreateSetErrMsg;
 
 onMounted(async () => {
   focusOn(titleRef.value);
-
   if (boardId.value !== null) {
     const response = await boardService.readBoard(boardId.value);
     board.value = response.data.data;
+    board.value.id = boardId.value;
   }
 });
 

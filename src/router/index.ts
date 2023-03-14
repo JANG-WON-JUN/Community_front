@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import loginStore from '../stores/login-store';
 import IndexView from '../views/layout/BoardIndex.vue';
 import SimpleIndexView from '../views/layout/SimpleIndex.vue';
 import LoginView from '../views/LoginView.vue';
@@ -48,6 +49,7 @@ const router = createRouter({
     {
       path: '/',
       name: '',
+      meta: { authRequired: true },
       component: IndexView,
       children: [
         {
@@ -72,6 +74,7 @@ const router = createRouter({
     {
       path: '/',
       name: '',
+      meta: { authRequired: true },
       component: IndexView,
       children: [
         {
@@ -108,6 +111,28 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+router.beforeEach(function (to, from, next) {
+  // to: 이동할 url에 해당하는 라우팅 객체
+  const authRequired = to.matched.some(function (routeInfo) {
+    return routeInfo.meta.authRequired;
+  });
+
+  console.log(authRequired);
+  if (!authRequired) {
+    next();
+  } else {
+    const useLoginStore = loginStore();
+
+    // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
+    // 로그인을 한 사용자가 아니라면 loginView로 이동
+    if (!useLoginStore.isAuthedMember) {
+      next({ name: 'login' });
+    } else {
+      next();
+    }
+  }
 });
 
 export default router;

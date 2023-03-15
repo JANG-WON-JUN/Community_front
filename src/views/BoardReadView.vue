@@ -206,6 +206,7 @@ const cancleAddReply = (comment: CommentRead) => {
     :model="commentWrite"
     :rules="commentRules"
     @submit.prevent
+    v-if="useLoginStore.isAuthedMember"
   >
     <el-form-item
       required

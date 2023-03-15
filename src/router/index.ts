@@ -119,7 +119,6 @@ router.beforeEach(function (to, from, next) {
     return routeInfo.meta.authRequired;
   });
 
-  console.log(authRequired);
   if (!authRequired) {
     next();
   } else {
